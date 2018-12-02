@@ -1,4 +1,4 @@
-with open('input1') as f:
+with open('input') as f:
     lines = f.readlines()
     count = 0
     for l in lines:

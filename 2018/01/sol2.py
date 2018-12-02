@@ -1,4 +1,4 @@
-with open('input2') as f:
+with open('input') as f:
     lines = f.readlines()
     curr = 0
     lst = [0]
