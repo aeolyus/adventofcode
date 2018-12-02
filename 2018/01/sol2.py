@@ -1,7 +1,7 @@
 with open('input') as f:
     lines = f.readlines()
     curr = 0
-    lst = [0]
+    lst = set([0])
     found = False
     while (not found) :
         for l in lines:
@@ -14,4 +14,4 @@ with open('input') as f:
                 found = True
                 break
             else:
-                lst.append(curr)
+                lst.add(curr)
