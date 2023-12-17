@@ -64,7 +64,7 @@ def part2(input_file: str):
 
 # Returns grid of places where light passes through
 def energized_grid(grid, start_pos):
-    cache = [[set() for _ in range(len(grid[0]))] for _ in range(len(grid))]
+    cache = [[[] for _ in range(len(grid[0]))] for _ in range(len(grid))]
     result = [[0 for _ in range(len(grid[0]))] for _ in range(len(grid))]
 
     stack = [start_pos]
@@ -72,10 +72,10 @@ def energized_grid(grid, start_pos):
     while len(stack) > 0:
         pos = stack.pop()
 
-        if not is_valid(grid, pos) or str(pos) in cache[pos.row][pos.col]:
+        if not is_valid(grid, pos) or pos.dir in cache[pos.row][pos.col]:
             continue
 
-        cache[pos.row][pos.col].add(str(pos))
+        cache[pos.row][pos.col].append(pos.dir)
         result[pos.row][pos.col] += 1
 
         char = grid[pos.row][pos.col]
