@@ -56,23 +56,24 @@ def part2(input_file: str):
 
     start = Position(0, 0, Direction.E, 0)
     dest = Position(len(grid) - 1, len(grid[0]) - 1, Direction.E, 0)
-    return dijkstra(grid, start, dest)
+    return astar(grid, start, dest)
 
 
-# TODO: Optimize with astar
-def dijkstra(grid, start: Position, dest: Position):
-    pq = [(0, start, [])]
+def astar(grid, start: Position, dest: Position):
+    # estimated, heat_loss, position
+    pq = [(0, 0, start)]
     heatmap = defaultdict(lambda: float('inf'))
     while pq:
-        heat_loss, pos, path = heapq.heappop(pq)
+        f, heat_loss, pos = heapq.heappop(pq)
         if pos == dest and pos.straight_count >= 4:
             return heat_loss
         for child in ultra_next_steps(grid, pos):
             new_heat_loss = heat_loss + grid[child.row][child.col]
             if new_heat_loss < heatmap[child]:
-                new_path = path + [child]
                 heatmap[child] = new_heat_loss
-                heapq.heappush(pq, (new_heat_loss, child, new_path))
+                h = manhattan_dist(child, dest)
+                f = new_heat_loss + h
+                heapq.heappush(pq, (f, new_heat_loss, child))
 
 
 def ultra_next_steps(grid, pos):
@@ -115,6 +116,11 @@ def ultra_next_steps(grid, pos):
             result.append(new_pos)
 
     return result
+
+
+def manhattan_dist(pos_a: Position, pos_b: Position):
+    return abs(pos_a.row - pos_b.row) \
+        + abs(pos_a.col - pos_b.col)
 
 
 def is_valid(grid, pos):
