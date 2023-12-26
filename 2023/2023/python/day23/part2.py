@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 NORTH = (-1, 0)
 SOUTH = (1, 0)
 EAST = (0, 1)
@@ -20,7 +18,7 @@ def part2(input_file: str):
 
     nodes = [start, end] + find_nodes(grid)
     dist = node_dist(nodes, grid)
-    return dfs(dist, start, end)
+    return dfs(dist, start, end)[0]
 
 
 def find_nodes(grid):
@@ -58,22 +56,25 @@ def node_dist(nodes, grid):
 
 
 def dfs(dist, start, end):
-    result = 0
-    stack = [(start, set(), 0)]
-    while stack:
-        pos, seen, count = stack.pop()
-        row, col = pos
+    seen = set()
 
-        seen = deepcopy(seen)
-        seen.add(pos)
-
+    def rec_dfs(pos):
         if pos == end:
-            result = max(result, count)
-        else:
-            for new_pos in dist[pos]:
-                if new_pos not in seen:
-                    stack.append((new_pos, seen, count + dist[pos][new_pos]))
-    return result
+            return 0, True
+        m = 0
+        found = False
+        seen.add(pos)
+        for n in dist[pos]:
+            if n not in seen:
+                n_count, n_found = rec_dfs(n)
+                found |= n_found
+                n_count += dist[pos][n]
+                if n_found:
+                    m = max(m, n_count)
+        seen.remove(pos)
+        return m, found
+
+    return rec_dfs(start)
 
 
 def is_valid(pos, grid):

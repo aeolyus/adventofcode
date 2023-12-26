@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 SLIP_N = "^"
 SLIP_S = "v"
 SLIP_E = ">"
