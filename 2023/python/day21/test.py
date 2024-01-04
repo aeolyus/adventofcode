@@ -3,7 +3,7 @@ from part1 import part1
 from part2 import part2
 
 
-class TestDay08(unittest.TestCase):
+class TestDay21(unittest.TestCase):
     def test_part1_example_1(self):
         self.assertEqual(16, part1("sample.txt", 6))
 

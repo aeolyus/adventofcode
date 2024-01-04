@@ -2,7 +2,7 @@ import unittest
 from part1 import part1
 
 
-class TestDay08(unittest.TestCase):
+class TestDay25(unittest.TestCase):
     def test_part1_example(self):
         self.assertEqual(54, part1("sample.txt"))
 

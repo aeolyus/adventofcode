@@ -3,7 +3,7 @@ from part1 import part1
 from part2 import part2, gaussian_elimination
 
 
-class TestDay08(unittest.TestCase):
+class TestDay24(unittest.TestCase):
     def test_part1_example(self):
         self.assertEqual(2, part1("sample.txt", [7, 27]))
 
